@@ -23,9 +23,9 @@ span{
 }
 
 .home {
-  width: 90%;
+  width: 95%;
   height: 100vh;
-  margin: 10px auto;
+  margin: 5px auto;
   background-color: thistle;
 }
 
@@ -34,7 +34,7 @@ span{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 150px;
+  height: 180px;
   flex-direction: column;
   text-align: left;
   width: 90%;
@@ -45,7 +45,7 @@ span{
   /* border: 1px solid rgb(14, 209, 167); */
   display: flex;
   width: 95%;
-  height: 60%;
+  height: 80%;
   justify-content: space-between;
 }
 .name_mobile_div {
@@ -65,51 +65,66 @@ span{
   justify-content: space-between;
 }
 .age_sex_gov_div {
-  width: 600px;
-  height: 100%;
+  width: 70%;
+  height: 95%;
   /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 .age_sex_div {
-  width: 400px;
+  width: 90%;
+  padding: 5px;
+  box-sizing: border-box;
+  height: auto;
   display: flex;
-  height: 50%;
+  /* height: 50%; */
   /* border: 1px solid black; */
   align-items: center;
   justify-content: space-between;
 }
 
 .age_sex_div > div {
-  /* border: 1px solid red; */
+  /* border: 1px solid rgb(67, 245, 32); */
   /* width: 250px; */
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-direction: column;
 }
 .age_div{
-  width: 240px;
-  /* border: 1px solid red; */
+  width: 60%;
+  /* border: 1px solid rgb(17, 15, 15); */
 }
 .sex_div{
-  width: 100px;
-  /* border: 1px solid rgb(29, 22, 22); */
+  width: 200px;
+  
+  /* border: 1px solid rgb(202, 51, 51); */
+}
+.sex_div>div{
+  display: flex;
 }
 
 .govt_id_div {
-  height: 50%;
-  width: 380px;
+  height: 60%;
+  width: 80%;
   /* border: 1px solid orangered; */
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: space-around;
+  /* justify-items: flex-start; */
 }
+/* .govt_id{
+  border: 1px solid blue;
+} */
 
 .govt_id_div > div {
   /* border: 1px solid green; */
-  width: 80%;
+  width: 70%;
+  
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 

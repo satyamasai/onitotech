@@ -1,15 +1,54 @@
 import React from "react";
 // import { Button } from '@mui/material/Button';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object({
+  name: yup.string().required(),
+  age: yup.number().positive().required("This is required"),
+  sex: yup.string().required(),
+  mobile: yup.string().matches(/^[6-9]\d{9}$/, "Mobile number is invalid"),
+  emergency_num: yup
+    .string()
+    .matches(/^[6-9]\d{9}$/, "Emergency contact number is invalid"),
+  id_type: yup.string(),
+  id_number: yup
+    .string()
+    .when("id_type", {
+      is: "aadhar",
+      then: ()=>yup
+        .string()
+        .matches(
+          /^\d{12}$/,
+          "Aadhar number should be a valid 12-digit numeric string"
+        ),
+      otherwise: () =>
+        yup
+          .string()
+          .matches(
+            /^[A-Za-z]{5}\d{4}[A-Za-z]{1}$/,
+            "PAN number should be a valid 10-digit alpha-numeric string"
+          ),
+    })
+    .required("Govt issued ID is a required field"),
+});
 
 const Home = () => {
-  const hadnleSubmit = (e) => {
-    e.preventDefault();
-    console.log(e.target.sex.value);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+  const onSubmit = (data) => {
+    console.log(data);
   };
 
   return (
     <div className="home">
-      <form onSubmit={hadnleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         {/* personal details section */}
 
         <div className="personal_details">
@@ -19,45 +58,74 @@ const Home = () => {
           <div className="personals_input">
             <div className="name_mobile_div">
               <div>
-                <label htmlFor="">Name <span>*</span></label>
-                <input type="text" name="name" placeholder="Name" />
+                <label htmlFor="">
+                  Name <span>*</span>
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  {...register("name")}
+                />
               </div>
-
+              {errors.name && <span>{errors.name.message}</span>}{" "}
               <div>
-                <label htmlFor="">Mobile<span>*</span> </label>
-                <input type="text" name="mobile" placeholder="Mobile" />
+                <label htmlFor="">Mobile </label>
+                <input
+                  type="number"
+                  name="mobile"
+                  placeholder="Mobile"
+                  {...register("mobile")}
+                />
               </div>
+              {errors.mobile && <span>{errors.mobile.message}</span>}{" "}
             </div>
             <div className="age_sex_gov_div">
               <div className="age_sex_div">
                 <div className="age_div">
-                  <label htmlFor="">Age<span>*</span> </label>
-                  <input type="text" name="age" placeholder="Age" />
+                  <div style={{ display: "flex" }}>
+                    <label htmlFor="">
+                      Age <span> * </span> {"  "}
+                    </label>
+                    <input
+                      type="number"
+                      name="age"
+                      placeholder="Age"
+                      {...register("age")}
+                    />
+                  </div>
+                  {errors.age && <span>{errors.age.message}</span>}{" "}
                 </div>
                 <div className="sex_div">
-                  <label htmlFor="">Sex<span>*</span></label>
-                  <select name="sex">
-                    <option value="">Sex</option>
-                    <option value="male">M</option>
-                    <option value="female">F</option>
-                  </select>
+                  <div>
+                    <label htmlFor="">
+                      Sex<span>*</span>
+                    </label>
+                    <select name="sex" {...register("sex")}>
+                      <option value="">Sex</option>
+                      <option value="male">M</option>
+                      <option value="female">F</option>
+                    </select>
+                  </div>
+                  {errors.sex && <span>{errors.sex.message}</span>}{" "}
                 </div>
               </div>
               <div className="govt_id_div">
-                <label htmlFor="">Govt issued ID<span>*</span></label>
-
-                <div>
-                  <select name="id_type">
+                <div className="govt_id">
+                  <label htmlFor="">Govt issued ID</label>
+                  <select name="id_type" {...register("id_type")}>
                     <option value="">ID type</option>
-                    <option value="">Aadhar</option>
-                    <option value="">PAN</option>
+                    <option value="aadhar">Aadhar</option>
+                    <option value="pan">PAN</option>
                   </select>
                   <input
-                    name="govt_id_number"
+                    name="id_number"
                     type="text"
                     placeholder="govt id Number"
+                    {...register("id_number")}
                   />
                 </div>
+                {errors.id_number && <span>{errors.id_number.message}</span>}{" "}
               </div>
             </div>
           </div>
@@ -71,32 +139,44 @@ const Home = () => {
           <div className="contact_input">
             <div className="gaurdian_details">
               <label htmlFor="">Guardian Details </label>
-              <select name="guardian" id="">
+              <select name="guardian" id="" {...register("guardian")}>
                 <option value="">Select Guardian</option>
-                <option value="">Mother</option>
-                <option value="">Father</option>
+                <option value="mother">Mother</option>
+                <option value="father">Father</option>
               </select>
 
               <input
                 type="text"
                 name="guardian_name"
                 placeholder="Enter Guardian Name"
+                {...register("guardian_name")}
               />
             </div>
 
             <div className="email_emergency">
               <div className="email">
                 <label htmlFor="">Email </label>
-                <input type="text" name="email" placeholder="Enter Email" />
+                <input
+                  {...register("email")}
+                  type="text"
+                  name="email"
+                  placeholder="Enter Email"
+                />
               </div>
 
               <div className="emergency">
-                <label htmlFor="">Emergency number </label>
-                <input
-                  type="text"
-                  name="emergency_num"
-                  placeholder="Enter Emergency number"
-                />
+                <div>
+                  <label htmlFor="">Emergency number </label>
+                  <input
+                    type="text"
+                    name="emergency_num"
+                    placeholder="Enter Emergency number"
+                    {...register("emergency_num")}
+                  />
+                </div>
+                {errors.emergency_num && (
+                  <span>{errors.emergency_num.message}</span>
+                )}{" "}
               </div>
             </div>
           </div>
@@ -112,6 +192,7 @@ const Home = () => {
               <div>
                 <label htmlFor="address">Address:</label>
                 <input
+                  {...register("address")}
                   placeholder="Enter Address"
                   type="text"
                   id="address"
@@ -121,6 +202,7 @@ const Home = () => {
               <div>
                 <label htmlFor="city">City:</label>
                 <input
+                  {...register("city")}
                   placeholder="Enter City"
                   type="text"
                   id="city"
@@ -132,19 +214,25 @@ const Home = () => {
               <div className="state_pin">
                 <div>
                   <label htmlFor="state">State: </label>
-                  <select type="text" id="state" name="state">
+                  <select
+                    {...register("state")}
+                    type="text"
+                    id="state"
+                    name="state"
+                  >
                     <option value="">Select State</option>
-                    <option value="">Delhi</option>
-                    <option value="">Maharastra</option>
-                    <option value="">Madhya Pradesh</option>
-                    <option value="">Uttar Pradesh</option>
-                    <option value="">Haryana</option>
-                    <option value="">Punjab</option>
+                    <option value="delhi">Delhi</option>
+                    <option value="maharastra">Maharastra</option>
+                    <option value="madhya pradesh">Madhya Pradesh</option>
+                    <option value="uttar pradesh">Uttar Pradesh</option>
+                    <option value="haryana">Haryana</option>
+                    <option value="punjab">Punjab</option>
                   </select>
                 </div>
                 <div>
                   <label htmlFor="pin">Pin: </label>
                   <input
+                    {...register("pin")}
                     placeholder="Enter PIN"
                     type="text"
                     id="pin"
@@ -155,6 +243,7 @@ const Home = () => {
               <div className="country">
                 <label htmlFor="country">Country:</label>
                 <input
+                  {...register("country")}
                   type="text"
                   id="country"
                   placeholder="Enter Country Name"
@@ -174,11 +263,17 @@ const Home = () => {
               <div className="occupation">
                 <label htmlFor="">Occupation </label>
 
-                <input name="occupation" type="text" placeholder="Occupation" />
+                <input
+                  {...register("occupation")}
+                  name="occupation"
+                  type="text"
+                  placeholder="Occupation"
+                />
               </div>
               <div className="nationality">
                 <label htmlFor="">Nationality </label>
                 <input
+                  {...register("nationality")}
                   type="text"
                   name="nationality"
                   placeholder="Nationality"
@@ -188,7 +283,7 @@ const Home = () => {
 
             <div className="Religion">
               <label htmlFor="">Religion </label>
-              <select type="text" name="religion">
+              <select {...register("religion")} type="text" name="religion">
                 <option value="">Select Religion</option>
                 <option value="">Hindu</option>
                 <option value="">Muslim</option>
@@ -200,32 +295,36 @@ const Home = () => {
 
             <div className="maritial_status">
               <label htmlFor="">Maritial Status</label>
-              <select name="maritial_status" id="">
+              <select
+                {...register("maritial_status")}
+                name="maritial_status"
+                id=""
+              >
                 <option value="">Maritial status</option>
-                <option value="">Single</option>
-                <option value="">Married</option>
-                <option value="">Divorced</option>
+                <option value="single">Single</option>
+                <option value="married">Married</option>
+                <option value="divorced">Divorced</option>
               </select>
             </div>
             <div className="blood_grp">
               <label htmlFor="">Blood Group</label>
-              <select name="blood_group" id="">
+              <select {...register("maritial_status")} name="blood_group" id="">
                 <option value="">Blood Group</option>
-                <option value="">A+</option>
-                <option value="">A-</option>
-                <option value="">B+</option>
-                <option value="">B-</option>
-                <option value="">AB+</option>
-                <option value="">AB-</option>
-                <option value="">O+</option>
-                <option value="">O-</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
               </select>
             </div>
           </div>
         </div>
         <div className="submit_div">
           <div>
-            <button className="cancel_btn">Cancel</button>
+            
             <input className="submit_btn" type="submit" value={"Submit"} />
           </div>
         </div>
