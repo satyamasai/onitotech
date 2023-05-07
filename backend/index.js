@@ -15,9 +15,9 @@ app.get("/", (req, res) => {
   res.send({ msg: "Welcome to onito..!!!" });
 });
 
-app.post("/getuser", addUser);
+app.post("/adduser", addUser);
 
-app.get("/getUsers", async (req, res) => {
+app.get("/getusers", async (req, res) => {
   try {
     const users = await userModel.find();
     res.send(users);

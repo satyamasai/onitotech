@@ -1,6 +1,7 @@
 import React from "react";
 // import { Button } from '@mui/material/Button';
 import { useForm } from "react-hook-form";
+import axios from 'axios'
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -42,8 +43,19 @@ const Home = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+//   ----onsubmit--------------
   const onSubmit = (data) => {
     console.log(data);
+    axios.post('http://localhost:8008/adduser',data)
+    .then((res)=>{
+        console.log(res)
+        window.location.reload()
+    })
+    .catch((err)=>{
+        console.log(err)
+    }
+)
   };
 
   return (

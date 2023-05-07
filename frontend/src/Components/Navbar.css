@@ -1,0 +1,12 @@
+.navbar{
+    width: 100%;
+    height: 40px;
+    background-color: pink;
+
+}
+.navbar>div{
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+}
