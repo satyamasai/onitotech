@@ -16,12 +16,16 @@ select {
   height: 40px;
   text-align: left;
   width: 98%;
+  text-decoration: underline;
+}
+span{
+  color: red;
 }
 
 .home {
   width: 90%;
-  height: 90vh;
-  margin: 20px auto;
+  height: 100vh;
+  margin: 10px auto;
   background-color: thistle;
 }
 
@@ -53,6 +57,7 @@ select {
   flex-direction: column;
 }
 .name_mobile_div > div {
+  width: 240px;
   display: flex;
   height: 49%;
   /* border: 1px solid black; */
@@ -68,32 +73,42 @@ select {
   justify-content: space-between;
 }
 .age_sex_div {
+  width: 400px;
   display: flex;
   height: 50%;
   /* border: 1px solid black; */
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .age_sex_div > div {
-  width: 250px;
+  /* border: 1px solid red; */
+  /* width: 250px; */
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
+}
+.age_div{
+  width: 240px;
+  /* border: 1px solid red; */
+}
+.sex_div{
+  width: 100px;
+  /* border: 1px solid rgb(29, 22, 22); */
 }
 
 .govt_id_div {
   height: 50%;
-  width: 80%;
+  width: 380px;
   /* border: 1px solid orangered; */
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .govt_id_div > div {
   /* border: 1px solid green; */
-  width: 60%;
+  width: 80%;
   display: flex;
   justify-content: space-between;
 }
@@ -162,8 +177,11 @@ select {
   /* border: 1px solid orchid; */
 }
 .address_city>div{
+  width: 250px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  /* border: 1px solid red; */
 }
 .state_pin_country{
 /* border: 1px solid green; */
@@ -181,7 +199,7 @@ flex-direction: column;
 }
 
 .country{
-  width: 300px;
+  width: 260px;
  display: flex;
   justify-content: space-between;
   /* border: 1px solid red; */
@@ -221,6 +239,40 @@ box-sizing: border-box;
   /* border: 1px solid green; */
 }
 .occu_nationality>div{
+  width: 280px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  /* border: 1px solid red; */
+}
+
+
+.submit_div{
+  width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: flex-end;
+  /* border: 1px solid black; */
+}
+.submit_div>div{
+  /* border: 1px solid red; */
+  width: 220px;
+  display: flex;
+  justify-content: space-between  ;
+}
+.submit_btn{
+  width: 100px;
+  height: 50px;
+  background-color: green;
+  color: white;
+  cursor: pointer;
+}
+
+.cancel_btn{
+   width: 100px;
+  height: 50px;
+  background-color: white;
+  color: red;
+  border-radius: 12px;
+  cursor: pointer;
 }
